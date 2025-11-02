@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone') {
+            steps {
+                git url: 'https://github.com/Akshay811-hub/akshay007.git', branch: 'master'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sshagent(['test']) {
+                    sh 'scp -o StrictHostKeyChecking=no index.html ubuntu@35.171.154.216:/var/www/html/'
+                }
+            }
+        }
+    }
+}
